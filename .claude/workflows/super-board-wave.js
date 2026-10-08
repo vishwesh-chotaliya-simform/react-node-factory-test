@@ -40,7 +40,7 @@ if (input.tier && !['low', 'medium', 'high'].includes(input.tier)) {
 }
 
 let halted = false
-const READ_FAILURE = `Required GitHub reads use .claude/bin/super-board-github-read.py: three total attempts, exit 79 means run halted. The helper validates field shape: a --kind issue read MUST be "--kind issue -- issue view <N> --json number,title,body[,labels,comments,…]" (number, title and body are always required); PR views add url; never pass --json without a field list or run gh issue/pr view without --json; use --kind json for any read that is not a whole issue/PR. Check --check before any GitHub write, migration, or merge. On exit 79 preserve worktree/card/approval/claims, make no more GitHub calls, and report status=halted (preflight verdict=halted). Never retry a mutation. Config: ${input.configPath}.`
+const READ_FAILURE = `Required GitHub reads use .claude/bin/super-board-github-read.py: three total attempts, exit 79 means run halted. Exit 64 means YOUR command or --kind was wrong (not GitHub, run not halted): read its hint, fix the call, run it again; never act on a read that did not exit 0. Default to --kind json with an explicit --json field list; --kind issue needs --json number,title,body[,…]; --kind issue-number needs a bare number (add --jq '.[0].number // empty' to a list call). Check --check before any GitHub write, migration, or merge. On exit 79 preserve worktree/card/approval/claims, make no more GitHub calls, and report status=halted (preflight verdict=halted). Never retry a mutation. Config: ${input.configPath}.`
 
 const CLASSIFY_SCHEMA = {
   type: 'object',
