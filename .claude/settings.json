@@ -1,4 +1,50 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(gh issue view:*)",
+      "Bash(gh issue edit:*)",
+      "Bash(gh issue comment:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr comment:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr ready:*)",
+      "Bash(gh pr edit:*)",
+      "Bash(gh project item-edit:*)",
+      "Bash(gh project item-list:*)",
+      "Bash(gh api:*)",
+      "Bash(git worktree:*)",
+      "Bash(.claude/bin/super-board-card.sh:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git blame:*)",
+      "Bash(mkdir:*)",
+      "Bash(pgrep:*)",
+      "Bash(node --check:*)",
+      "Bash(bash .claude/bin/super-board-wave-plan.sh:*)",
+      "Bash(bash .claude/bin/super-board-preflight.sh:*)",
+      "Bash(bash .claude/bin/super-board-usage.sh:*)",
+      "Bash(bash .claude/bin/super-board-throttle.sh:*)",
+      "Bash(bash .claude/bin/super-board-codex-lane.sh:*)",
+      "Bash(bash .claude/bin/super-board-codex-wave.sh:*)",
+      "Bash(bash .claude/bin/super-board-host.sh:*)",
+      "Bash(bash .claude/bin/super-board-pr-body.sh:*)",
+      "Bash(bash .claude/bin/super-board-merge-gate.sh:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(bash .claude/bin/super-board-env-check.sh:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run test:node:*)",
+      "Bash(npm run test:react:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npx playwright:*)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -59,50 +105,7 @@
       }
     ]
   },
-  "permissions": {
-    "allow": [
-      "Bash(gh issue view:*)",
-      "Bash(gh issue edit:*)",
-      "Bash(gh issue comment:*)",
-      "Bash(gh pr view:*)",
-      "Bash(gh pr diff:*)",
-      "Bash(gh pr checks:*)",
-      "Bash(gh pr comment:*)",
-      "Bash(gh pr create:*)",
-      "Bash(gh pr ready:*)",
-      "Bash(gh pr edit:*)",
-      "Bash(gh project item-edit:*)",
-      "Bash(gh project item-list:*)",
-      "Bash(gh api:*)",
-      "Bash(git worktree:*)",
-      "Bash(.claude/bin/super-board-card.sh:*)",
-      "Bash(git checkout:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(git pull:*)",
-      "Bash(git fetch:*)",
-      "Bash(git blame:*)",
-      "Bash(mkdir:*)",
-      "Bash(pgrep:*)",
-      "Bash(node --check:*)",
-      "Bash(bash .claude/bin/super-board-wave-plan.sh:*)",
-      "Bash(bash .claude/bin/super-board-preflight.sh:*)",
-      "Bash(bash .claude/bin/super-board-usage.sh:*)",
-      "Bash(bash .claude/bin/super-board-throttle.sh:*)",
-      "Bash(bash .claude/bin/super-board-codex-lane.sh:*)",
-      "Bash(bash .claude/bin/super-board-codex-wave.sh:*)",
-      "Bash(bash .claude/bin/super-board-host.sh:*)",
-      "Bash(bash .claude/bin/super-board-pr-body.sh:*)",
-      "Bash(bash .claude/bin/super-board-merge-gate.sh:*)",
-      "Bash(gh pr merge:*)",
-      "Bash(bash .claude/bin/super-board-env-check.sh:*)",
-      "Bash(npm test:*)",
-      "Bash(npm run test:node:*)",
-      "Bash(npm run test:react:*)",
-      "Bash(npm run build:*)",
-      "Bash(npx vitest:*)",
-      "Bash(npx playwright:*)"
-    ]
+  "enabledPlugins": {
+    "ponytail@ponytail": true
   }
 }
