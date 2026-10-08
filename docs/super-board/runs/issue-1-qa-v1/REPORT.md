@@ -5,7 +5,7 @@ Result: PASS (4/4 AC). No app or test code changed.
 | AC | Proof |
 |---|---|
 | Empty body (none or `{}`) returns 400 `{"error":"Invalid payload"}` | `server/users.test.js:6`, `:12`; live probe in `http-probe.log` rows 1-2 |
-| Valid `name` + `email` returns 201 echoing both | `server/users.test.js:31`; probe row 3 |
+| Valid `name` + `email` returns 201 echoing both | `server/users.test.js:32`; probe row 3 |
 | Supertest tests cover both and pass with `npm run test:node` | 4/4 green, `test-node.log` |
 | `npm test` passes | 4/4 green; `npm run build` also green |
 
