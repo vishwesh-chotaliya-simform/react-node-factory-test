@@ -5,6 +5,8 @@ app.use(express.json());
 
 const isFilled = (value) => typeof value === 'string' && value.trim() !== '';
 
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
 app.post('/api/users', (req, res) => {
   const { name, email } = req.body ?? {};
   if (!isFilled(name) || !isFilled(email)) {
