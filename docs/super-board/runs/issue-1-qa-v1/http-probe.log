@@ -1,0 +1,9 @@
+no body, no content-type   -> 400 application/json; charset=utf-8 {"error":"Invalid payload"}
+empty JSON {}              -> 400 application/json; charset=utf-8 {"error":"Invalid payload"}
+valid name+email           -> 201 application/json; charset=utf-8 {"name":"Ada","email":"ada@example.com"}
+whitespace-only name       -> 400 application/json; charset=utf-8 {"error":"Invalid payload"}
+JSON array []              -> 400 application/json; charset=utf-8 {"error":"Invalid payload"}
+text/plain body            -> 400 application/json; charset=utf-8 {"error":"Invalid payload"}
+malformed JSON             -> 400 text/html; charset=utf-8 <!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <title>Error</title> </head
+email not string           -> 400 application/json; charset=utf-8 {"error":"Invalid payload"}
+extra fields echoed?       -> 201 application/json; charset=utf-8 {"name":"Ada","email":"a@b.c"}
