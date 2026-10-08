@@ -2,7 +2,10 @@
 """Bounded, read-only GitHub evidence. Exit 79 stops this repository's board run.
 
 A logical read gets three total attempts. Success resets its own sequence; other
-reads cannot reset it. Permanent query/auth errors stop on the first attempt.
+reads cannot reset it. Auth/permission errors stop on the first attempt.
+A caller mistake (gh rejects the flags, a malformed GraphQL query, or the same
+answer twice in a shape that does not match --kind) exits 64 at once with a hint
+and never halts the run: retrying a wrong command cannot fix it.
 The halt file is shared through the main checkout, including linked worktrees.
 Only an explicit new run clears it with --resume after preserving the old reason.
 Mutations never enter this retry helper.
@@ -23,6 +26,32 @@ HALTED = 79
 
 class ReadHalted(Exception):
     pass
+
+
+class CallerError(ValueError):
+    """The command or --kind is wrong, not GitHub: exit 64, no retry, no halt."""
+
+
+KIND_HINTS = {
+    'issue': 'needs one issue/PR object with number, title and body: issue view N --json number,title,body[,…]',
+    'issue-number': 'needs a bare number or nothing: add --jq ".[0].number // empty" to a list call',
+    'json': 'needs valid JSON: pass --json <fields> (a field list is required)',
+    'scalar': 'needs a non-empty value: use --jq to extract one field',
+}
+
+
+def caller_mistake(text):
+    return re.search(r'Specify one or more comma-separated fields|Unknown JSON field|unknown flag|'
+                     r'unknown shorthand flag|unknown command|accepts \d+ arg|requires at least \d+ arg|'
+                     r'invalid argument|required flag|Cannot query field|Unknown (?:argument|type)|'
+                     r'Syntax Error|Parse error on|GRAPHQL_VALIDATION_FAILED|undefinedField|'
+                     r'variableRequiresValidType', text, re.I) is not None
+
+
+def caller_error(kind, why, sample):
+    hint = KIND_HINTS.get(kind, 'use --kind json for a plain JSON read, or match the fields this kind validates')
+    got = sample.strip().replace('\n', ' ')[:160] or '(empty)'
+    return CallerError(f'caller error, not GitHub (run NOT halted): {why}. --kind {kind} {hint}. Got: {got}')
 
 
 def halt_path():
@@ -86,9 +115,7 @@ def read_only(args):
 def permanent_error(text):
     if re.search(r'rate limit|secondary rate', text, re.I):
         return False
-    return re.search(r'Cannot query field|Unknown (?:argument|type)|Syntax Error|Parse error on|'
-                     r'GRAPHQL_VALIDATION_FAILED|undefinedField|variableRequiresValidType|'
-                     r'HTTP 40[134]|Bad credentials|requires authentication|Resource not accessible|'
+    return re.search(r'HTTP 40[134]|Bad credentials|requires authentication|Resource not accessible|'
                      r'Could not resolve to (?:a|an) |missing required scopes', text, re.I) is not None
 
 
@@ -254,6 +281,7 @@ def read(args, kind='json', meta=None, recovering=False):
         check_halt()
     operation = {'args': args, 'kind': kind, 'meta': meta}
     last = 'GitHub read failed'
+    rejected = None  # stdout of the previous shape failure; the same answer twice = caller error
     delay = float(os.environ.get('SB_GITHUB_RETRY_DELAY', '1'))
     for attempt in range(1, 4):
         if not recovering:
@@ -269,6 +297,8 @@ def read(args, kind='json', meta=None, recovering=False):
                     diagnostic += json.dumps([p.get('errors', []) for p in (payload if isinstance(payload, list) else [payload]) if isinstance(p, dict)])
                 except ValueError:
                     pass
+            if caller_mistake(diagnostic):
+                raise caller_error(kind, 'gh or GitHub rejected the command itself', diagnostic)
             if permanent_error(diagnostic):
                 halt('GitHub rejected a required read (query, authentication, or permission error); fix it before restarting', attempt, operation)
             if result.returncode:
@@ -281,6 +311,9 @@ def read(args, kind='json', meta=None, recovering=False):
                         check_halt()
                     return result.stdout, value
                 except (ValueError, KeyError, TypeError, AttributeError, IndexError) as error:
+                    if result.stdout == rejected:
+                        raise caller_error(kind, f'the same answer twice does not match the kind ({error})', result.stdout)
+                    rejected = result.stdout
                     last = f'GitHub required read returned incomplete evidence: {error}'
         except (OSError, subprocess.SubprocessError):
             last = 'GitHub required read timed out or could not start'

@@ -19,3 +19,7 @@
 | #2 | build → qa → review | advanced | Done | PR #4 squash 8ef66ee on staging · 12/12 tests · truth 90 |
 
 15:53:02 ✅ board drained — 2/2 Done · exiting cleanly
+
+16:47:00 super-board run started (workflow, tier medium)
+| #7 | build:halted | halted | Ready | wave halted: builder sent `pr list` with --kind issue-number (4th malformed-read halt); 146,633 tokens |
+16:48:16 🛑 halted — malformed helper reads persist after preamble fix; run stopped for owner decision
