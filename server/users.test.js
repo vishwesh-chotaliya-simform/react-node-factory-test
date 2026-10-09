@@ -37,6 +37,22 @@ describe('POST /api/users', () => {
     }
   });
 
+  it('returns 400 for an email with tab, newline or padding whitespace, or a non-string email', async () => {
+    for (const email of ['ada\t@example.com', 'ada@exa\nmple.com', ' ada@example.com', 'ada@example.com ', 'ada@example.', 'ada@.com', null, 42, ['ada@example.com'], { a: 1 }]) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: 'Invalid payload' });
+    }
+  });
+
+  it('returns 201 for a plus-tagged or multi-label-domain email', async () => {
+    for (const email of ['ada+tag@example.com', 'ada.l@mail.example.co.uk']) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(201);
+      expect(res.body).toEqual({ name: 'Ada', email });
+    }
+  });
+
   it('returns 201 echoing name and email for a valid body', async () => {
     const res = await request(app)
       .post('/api/users')

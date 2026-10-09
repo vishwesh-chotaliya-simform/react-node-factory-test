@@ -1,0 +1,25 @@
+
+ RUN  v5.0.3 /home/vishwesh/Vishwesh/projects/react-node-factory-test/.claude/worktrees/issue-11-qa
+
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > answers GET with a query string 22ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > answers GET without a request body or auth header 3ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > returns 404 for POST 7ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > does not return 200 for put 3ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > does not return 200 for patch 2ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > does not return 200 for delete 1ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > leaves POST /api/users untouched 3ms
+ ✓ |server| server/health.test.js > GET /api/health > returns 200 with { status: "ok" } 19ms
+ ✓ |server| server/health.test.js > GET /api/health > does not return 200 for POST (route is GET only) 4ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 when there is no body 36ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 for an empty JSON object 14ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 when name or email is missing, empty or not a string 10ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 for a malformed email 9ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 for an email with tab, newline or padding whitespace, or a non-string email 10ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 201 for a plus-tagged or multi-label-domain email 2ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 201 echoing name and email for a valid body 1ms
+
+ Test Files  3 passed (3)
+      Tests  16 passed (16)
+   Start at  12:49:31
+   Duration  321ms (import 55%, tests 26%, transform 16%, worker 3%)
+
