@@ -29,6 +29,14 @@ describe('POST /api/users', () => {
     }
   });
 
+  it('returns 400 for a malformed email', async () => {
+    for (const email of ['ada', 'ada@', '@example.com', 'ada@example', 'ada@@example.com', 'ada @example.com']) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: 'Invalid payload' });
+    }
+  });
+
   it('returns 201 echoing name and email for a valid body', async () => {
     const res = await request(app)
       .post('/api/users')
