@@ -1,0 +1,14 @@
+
+ RUN  v5.0.3 /home/vishwesh/Vishwesh/projects/react-node-factory-test/.claude/worktrees/issue-11-qa
+
+
+ Test Files  5 passed (5)
+      Tests  31 passed (31)
+   Start at  13:00:40
+   Duration  920ms (environment 54%, import 25%, tests 15%, transform 5%, worker 1%)
+
+
+> react-node-factory-test@1.0.0 build
+> echo 'Build passed'
+
+Build passed

@@ -54,6 +54,30 @@ describe('POST /api/users', () => {
     expect(Date.now() - started).toBeLessThan(500);
   });
 
+  it('returns 400 for an empty domain label such as ada@..com', async () => {
+    for (const email of ['ada@..com', 'ada@example..com']) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: 'Invalid payload' });
+    }
+  });
+
+  it('returns 400 quickly for ~90 KB emails shaped to force regex backtracking', async () => {
+    const n = 90000;
+    for (const email of [
+      `a@${'b.'.repeat(n / 2)} `,
+      `a@${'bbbb.'.repeat(n / 5)} `,
+      `a@${'b'.repeat(n)} `,
+      `${'.'.repeat(n)}@x.y `,
+      'a@'.repeat(n / 2),
+    ]) {
+      const started = Date.now();
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(Date.now() - started).toBeLessThan(500);
+    }
+  });
+
   it('returns 201 for a plus-tagged or multi-label-domain email', async () => {
     for (const email of ['ada+tag@example.com', 'ada.l@mail.example.co.uk']) {
       const res = await request(app).post('/api/users').send({ name: 'Ada', email });

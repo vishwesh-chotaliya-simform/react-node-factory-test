@@ -1,0 +1,28 @@
+
+ RUN  v5.0.3 /home/vishwesh/Vishwesh/projects/react-node-factory-test/.claude/worktrees/issue-11-qa
+
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > answers GET with a query string 27ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > answers GET without a request body or auth header 3ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > returns 404 for POST 8ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > does not return 200 for put 3ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > does not return 200 for patch 2ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > does not return 200 for delete 2ms
+ ✓ |server| server/health.edge.test.js > /api/health edge cases > leaves POST /api/users untouched 4ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 when there is no body 28ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 for an empty JSON object 8ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 when name or email is missing, empty or not a string 18ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 for a malformed email 21ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 for an email with tab, newline or padding whitespace, or a non-string email 19ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 quickly for a ~90 KB email that ends in whitespace 3ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 for an empty domain label such as ada@..com 3ms
+ ✓ |server| server/health.test.js > GET /api/health > returns 200 with { status: "ok" } 38ms
+ ✓ |server| server/health.test.js > GET /api/health > does not return 200 for POST (route is GET only) 8ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 400 quickly for ~90 KB emails shaped to force regex backtracking 16ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 201 for a plus-tagged or multi-label-domain email 6ms
+ ✓ |server| server/users.test.js > POST /api/users > returns 201 echoing name and email for a valid body 2ms
+
+ Test Files  3 passed (3)
+      Tests  19 passed (19)
+   Start at  13:00:48
+   Duration  379ms (import 59%, tests 32%, transform 7%, worker 2%)
+
