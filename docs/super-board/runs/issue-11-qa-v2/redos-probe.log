@@ -1,0 +1,11 @@
+isEmail regex (7c0c2ea) against 95 KB adversarial inputs, node -e probe:
+dots         false 0.07 ms
+labels1      false 0.70 ms
+labels4      false 0.38 ms
+nodot        false 0.13 ms
+longlocal    false 0.14 ms
+localdots    false 0.60 ms
+localat      false 0.14 ms
+multiAt      false 0.43 ms
+trailingDot  false 0.60 ms
+Old regex (a0f0f53) on the new QA tests: 3 failed (4741 ms, 2777 ms timeouts; ada@..com accepted).

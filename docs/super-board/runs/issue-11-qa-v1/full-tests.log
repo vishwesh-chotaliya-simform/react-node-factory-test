@@ -1,0 +1,62 @@
+
+> react-node-factory-test@1.0.0 test
+> vitest run
+
+
+ RUN  v5.0.3 /home/vishwesh/Vishwesh/projects/react-node-factory-test/.claude/worktrees/issue-11-qa
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 2 unhandled errors during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯⎯⎯ Unhandled Error ⎯⎯⎯⎯⎯⎯⎯
+Error: [vitest-pool]: Failed to start forks worker for test files /home/vishwesh/Vishwesh/projects/react-node-factory-test/.claude/worktrees/issue-11-qa/client/components/UserStatusBadge.edge.test.jsx.
+ ❯ ../../../node_modules/vitest/dist/chunks/index.DpLw24bj.js:11538:94
+ ❯ processTicksAndRejections node:internal/process/task_queues:103:5
+ ❯ Pool.schedule ../../../node_modules/vitest/dist/chunks/index.DpLw24bj.js:11538:5
+
+Caused by: Error: Cannot find package 'jsdom' imported from /home/vishwesh/Vishwesh/projects/react-node-factory-test/node_modules/vitest/dist/chunks/index.k8L_ZRzq.js
+ ❯ Object.getPackageJSONURL node:internal/modules/package_json_reader:314:9
+ ❯ packageResolve node:internal/modules/esm/resolve:768:81
+ ❯ moduleResolve node:internal/modules/esm/resolve:855:18
+ ❯ defaultResolve node:internal/modules/esm/resolve:985:11
+ ❯ #cachedDefaultResolve node:internal/modules/esm/loader:747:20
+ ❯ ModuleLoader.resolve node:internal/modules/esm/loader:724:38
+ ❯ ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:320:38
+ ❯ onImport.tracePromise.__proto__ node:internal/modules/esm/loader:680:36
+ ❯ TracingChannel.tracePromise node:diagnostics_channel:350:14
+ ❯ ModuleLoader.import node:internal/modules/esm/loader:679:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+⎯⎯⎯⎯⎯⎯ Unhandled Error ⎯⎯⎯⎯⎯⎯⎯
+Error: [vitest-pool]: Failed to start forks worker for test files /home/vishwesh/Vishwesh/projects/react-node-factory-test/.claude/worktrees/issue-11-qa/client/components/UserStatusBadge.test.jsx.
+ ❯ ../../../node_modules/vitest/dist/chunks/index.DpLw24bj.js:11538:94
+ ❯ processTicksAndRejections node:internal/process/task_queues:103:5
+ ❯ Pool.schedule ../../../node_modules/vitest/dist/chunks/index.DpLw24bj.js:11538:5
+
+Caused by: Error: Cannot find package 'jsdom' imported from /home/vishwesh/Vishwesh/projects/react-node-factory-test/node_modules/vitest/dist/chunks/index.k8L_ZRzq.js
+ ❯ Object.getPackageJSONURL node:internal/modules/package_json_reader:314:9
+ ❯ packageResolve node:internal/modules/esm/resolve:768:81
+ ❯ moduleResolve node:internal/modules/esm/resolve:855:18
+ ❯ defaultResolve node:internal/modules/esm/resolve:985:11
+ ❯ #cachedDefaultResolve node:internal/modules/esm/loader:747:20
+ ❯ ModuleLoader.resolve node:internal/modules/esm/loader:724:38
+ ❯ ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:320:38
+ ❯ onImport.tracePromise.__proto__ node:internal/modules/esm/loader:680:36
+ ❯ TracingChannel.tracePromise node:diagnostics_channel:350:14
+ ❯ ModuleLoader.import node:internal/modules/esm/loader:679:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  3 passed (3)
+      Tests  16 passed (16)
+     Errors  2 errors
+   Start at  12:49:35
+   Duration  465ms (import 63%, tests 24%, transform 10%, worker 2%)
+

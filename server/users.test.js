@@ -29,6 +29,63 @@ describe('POST /api/users', () => {
     }
   });
 
+  it('returns 400 for a malformed email', async () => {
+    for (const email of ['ada', 'ada@', '@example.com', 'ada@example', 'ada@@example.com', 'ada @example.com']) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: 'Invalid payload' });
+    }
+  });
+
+  it('returns 400 for an email with tab, newline or padding whitespace, or a non-string email', async () => {
+    for (const email of ['ada\t@example.com', 'ada@exa\nmple.com', ' ada@example.com', 'ada@example.com ', 'ada@example.', 'ada@.com', null, 42, ['ada@example.com'], { a: 1 }]) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: 'Invalid payload' });
+    }
+  });
+
+  it('returns 400 quickly for a ~90 KB email that ends in whitespace', async () => {
+    const email = `a@${'.'.repeat(90000)} `;
+    const started = Date.now();
+    const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: 'Invalid payload' });
+    expect(Date.now() - started).toBeLessThan(500);
+  });
+
+  it('returns 400 for an empty domain label such as ada@..com', async () => {
+    for (const email of ['ada@..com', 'ada@example..com']) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: 'Invalid payload' });
+    }
+  });
+
+  it('returns 400 quickly for ~90 KB emails shaped to force regex backtracking', async () => {
+    const n = 90000;
+    for (const email of [
+      `a@${'b.'.repeat(n / 2)} `,
+      `a@${'bbbb.'.repeat(n / 5)} `,
+      `a@${'b'.repeat(n)} `,
+      `${'.'.repeat(n)}@x.y `,
+      'a@'.repeat(n / 2),
+    ]) {
+      const started = Date.now();
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(400);
+      expect(Date.now() - started).toBeLessThan(500);
+    }
+  });
+
+  it('returns 201 for a plus-tagged or multi-label-domain email', async () => {
+    for (const email of ['ada+tag@example.com', 'ada.l@mail.example.co.uk']) {
+      const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+      expect(res.status).toBe(201);
+      expect(res.body).toEqual({ name: 'Ada', email });
+    }
+  });
+
   it('returns 201 echoing name and email for a valid body', async () => {
     const res = await request(app)
       .post('/api/users')
