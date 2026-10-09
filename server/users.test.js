@@ -45,6 +45,15 @@ describe('POST /api/users', () => {
     }
   });
 
+  it('returns 400 quickly for a ~90 KB email that ends in whitespace', async () => {
+    const email = `a@${'.'.repeat(90000)} `;
+    const started = Date.now();
+    const res = await request(app).post('/api/users').send({ name: 'Ada', email });
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: 'Invalid payload' });
+    expect(Date.now() - started).toBeLessThan(500);
+  });
+
   it('returns 201 for a plus-tagged or multi-label-domain email', async () => {
     for (const email of ['ada+tag@example.com', 'ada.l@mail.example.co.uk']) {
       const res = await request(app).post('/api/users').send({ name: 'Ada', email });

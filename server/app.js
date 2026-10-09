@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 
 const isFilled = (value) => typeof value === 'string' && value.trim() !== '';
-const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+const isEmail = (value) => /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(value);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
